@@ -1,59 +1,44 @@
 package org.skypro.skyshop.model.product;
 
-import org.skypro.skyshop.model.search.Searchable;
+import java.math.BigDecimal;
 import java.util.UUID;
-import java.util.Objects;
 
-public class Product implements Searchable {
+
+public class Product {
+
     private final UUID id;
-    private String productName;
-    private int productPrice;
-    private boolean special;
+    private final String name;
+    private final BigDecimal price;
 
-    public Product(UUID id, String productName, int productPrice, boolean special) {
+    public Product(UUID id, String name, BigDecimal price) {
         this.id = id;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.special = special;
+        this.name = name;
+        this.price = price;
     }
 
-    @Override
     public UUID getId() {
         return id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public int getProductPrice() {
-        return productPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public boolean isSpecial() {
-        return special;
-    }
-
-    @Override
-    public String getSearchTerm() {
-        return this.productName;
-    }
-
-    @Override
-    public String getContentType() {
-        return "product";
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id);
+        return java.util.Objects.equals(id, product.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return java.util.Objects.hash(id);
     }
 }
