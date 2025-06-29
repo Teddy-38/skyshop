@@ -17,7 +17,6 @@ public class Book extends Product {
         this.isHardCover = isHardCover;
     }
 
-    // Геттеры для полей класса Book
     public int getPages() {
         return pages;
     }

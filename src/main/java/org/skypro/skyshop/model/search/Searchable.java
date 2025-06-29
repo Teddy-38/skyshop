@@ -6,7 +6,6 @@ import java.util.UUID;
 public interface Searchable {
     UUID getId();
 
-    // Вспомогательные методы для поиска и сериализации, которые не должны попадать в JSON
     @JsonIgnore
     String getSearchTerm();
 

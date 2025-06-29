@@ -17,7 +17,6 @@ public class Electronics extends Product {
         this.isWireless = isWireless;
     }
 
-    // Геттеры для полей
     public int getWarrantyMonths() {
         return warrantyMonths;
     }
