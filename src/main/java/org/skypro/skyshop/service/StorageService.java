@@ -8,9 +8,6 @@ import java.util.UUID;
 
     @Service
     public class StorageService {
-        // ... (ваше поле private final Map<UUID, Product> availableProducts;)
-
-        // ... (существующие методы)
 
         /**
          * Возвращает продукт по его ID, обернутый в Optional.

@@ -14,14 +14,12 @@ import java.util.UUID;
 public class ShopController {
 
     private final BasketService basketService;
-    // ... другие сервисы, если они есть
 
     public ShopController(BasketService basketService /* ...другие сервисы */) {
         this.basketService = basketService;
         // ...
     }
 
-    // ... другие методы вашего контроллера
 
     /**
      * Добавляет продукт в корзину по ID, переданному в URL.

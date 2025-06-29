@@ -30,8 +30,6 @@ public class ProductBasket {
      * @return Неизменяемая Map<UUID, Integer> с продуктами и их количеством.
      */
     public Map<UUID, Integer> getProducts() {
-        // Оборачиваем мапу в Collections.unmodifiableMap, чтобы предотвратить
-        // ее изменение извне этого класса.
         return Collections.unmodifiableMap(products);
     }
 }
