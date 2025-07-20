@@ -1,48 +1,43 @@
 package org.skypro.skyshop.service;
 
-import org.skypro.skyshop.exception.NoSuchProductException;
-import org.skypro.skyshop.model.basket.BasketItem;
-import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.basket.UserBasket;
+import org.skypro.skyshop.model.product.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class BasketService {
 
-    private final ProductBasket productBasket;
     private final StorageService storageService;
+    private final List<UserBasket.Item> items = new CopyOnWriteArrayList<>();
 
-    public BasketService(ProductBasket productBasket, StorageService storageService) {
-        this.productBasket = productBasket;
+    public BasketService(StorageService storageService) {
         this.storageService = storageService;
     }
 
-    public void addProductById(UUID id) {
+    public void addProduct(UUID id, int count) {
+        if (count <= 0) {
+            throw new IllegalArgumentException("Количество должно быть положительным");
+        }
+        Product product = storageService.getProductById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Товар не найден"));
 
-        storageService.getProductById(id)
-                .orElseThrow(() -> new NoSuchProductException("Продукт с id " + id + " не найден"));
-
-        productBasket.addProduct(id);
+        items.add(new UserBasket.Item(product, count));
     }
 
-    public UserBasket getUserBasket() {
-        List<BasketItem> basketItems = productBasket.getProducts().entrySet().stream()
-                .map(entry -> {
-                    UUID productId = entry.getKey();
-                    int count = entry.getValue();
+    public UserBasket getBasket() {
+        return new UserBasket(items);
+    }
 
-                    return new BasketItem(
-                            storageService.getProductById(productId)
-                                    .orElseThrow(() -> new NoSuchProductException("Продукт с id " + productId + " не найден в хранилище при сборке корзины")),
-                            count
-                    );
-                })
-                .collect(Collectors.toList());
-
-        return new UserBasket(basketItems);
+    /**
+     * Очищает корзину, удаляя все товары.
+     * Этот метод возвращает void.
+     */
+    public void clear() {
+        items.clear();
     }
 }
