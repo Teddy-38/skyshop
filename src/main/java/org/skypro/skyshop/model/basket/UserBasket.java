@@ -1,28 +1,20 @@
 package org.skypro.skyshop.model.basket;
 
-import java.math.BigDecimal;
+import org.skypro.skyshop.model.product.Product;
+
 import java.util.List;
 
-public class UserBasket {
+/**
+ * Представляет корзину пользователя со списком товаров.
+ */
+public record UserBasket(List<Item> items) {
 
-    private final List<BasketItem> items;
-    private final BigDecimal total;
-
-    public UserBasket(List<BasketItem> items) {
-        this.items = items;
-
-        this.total = items.stream()
-
-                .map(item -> item.product().getPrice().multiply(BigDecimal.valueOf(item.count())))
-
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public List<BasketItem> getItems() {
-        return items;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
+    /**
+     * Внутренний record, представляющий один элемент в корзине.
+     * Вероятно, у вас здесь было пусто: public record Item() {}
+     *
+     * Нужно исправить, чтобы он принимал товар и количество.
+     */
+    public record Item(Product product, int count) {
     }
 }

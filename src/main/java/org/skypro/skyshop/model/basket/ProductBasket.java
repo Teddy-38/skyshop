@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-@SessionScope // Эта аннотация указывает, что для каждой HTTP-сессии будет создан свой экземпляр этого бина.
+@SessionScope
 public class ProductBasket {
 
     private final Map<UUID, Integer> products = new HashMap<>();
@@ -20,8 +20,7 @@ public class ProductBasket {
      * @param id Уникальный идентификатор продукта.
      */
     public void addProduct(UUID id) {
-        // Метод merge идеально подходит: если ключ уже существует, он применяет функцию,
-        // а если нет - добавляет новую пару (ключ, значение).
+
         products.merge(id, 1, Integer::sum);
     }
 
